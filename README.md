@@ -43,6 +43,6 @@ The settings will be persisted into a `site/config/settingsarea/settings.json` f
 
 You can access the settings via a `settings()` helper:
 
-```php
+```html
 <body style="background-color: <?= settings()->background()->escape('css') ?>">
 ```
