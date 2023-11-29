@@ -32,7 +32,7 @@ Put plugin into plugins folder.
             '-',
             'settings' => [
                 'label' => 'Settings',
-                'icon' => 'sun' // the "settings" icon is already used by "system",
+                'icon' => 'sun', // the "settings" icon is already used by "system"
                 'drawer' => 'settingsarea/drawer',
             ]
         ]
