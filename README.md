@@ -43,7 +43,7 @@ Put plugin into plugins folder.
             placeholder: "Enter your API key"
     ```
     
-2. Add the the Settings drawer to the menu in your Kirby config
+2. Add the Settings drawer to the menu in your Kirby config
     ```php
     <?php 
     return [
