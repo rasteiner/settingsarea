@@ -5,7 +5,7 @@ A settings drawer for Kirby 4. Currently just a toy to explore the "panel.menu" 
 Put plugin into plugins folder.
 
 ## How to use
-1. Create a **`settings.yml`** blueprint and put it into `sites/blueprints` folder, alongside `site.yml`
+1. Create a **`settings.yml`** blueprint and put it into `site/blueprints` folder, alongside `site.yml`
     ```yml
     fields:
       background: 
