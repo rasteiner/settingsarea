@@ -2,11 +2,9 @@
 
 namespace rasteiner\settingsarea;
 
-use Exception;
 use Kirby\Cms\App as Kirby;
 use Kirby\Cms\Page;
 use Kirby\Form\Form;
-use Kirby\Uuid\Uuids;
 
 include_once __DIR__ . '/helpers.php';
 
@@ -70,27 +68,42 @@ Kirby::plugin('rasteiner/settingsarea', [
         ]
     ],
     'areas' => [
-        'settings' => fn(Kirby $kirby) => [
+        'settings' => fn() => [
             'drawers' => [
                 'settingsarea/drawer' => [
                     'load' => function() {
                         $page = SettingsAreaPage::getPage();
                         $form = Form::for($page);
+                        $tabs = [];
 
-                        $fields = $form->fields()->toArray();
-                        
-                        foreach($fields as $key => $field) {
-                            $fields[$key]['endpoints'] = [
-                                'field' => 'rasteiner/settingsarea/field/' . $field['name'],
+                        foreach($page->blueprint()->tabs() as $tab) {
+                            $tabs[$tab['name']] = [
+                                'name' => $tab['name'],
+                                'label' => $tab['label'] ?? null,
+                                'fields' => [],
                             ];
-                        }
+                            
+                            foreach($tab['columns'] as $column) {
+                                foreach($column['sections'] as $section) {
+                                    if($section['type'] !== 'fields') continue;
 
+                                    foreach($section['fields'] as $fieldname => $field) {
+                                        $tabs[$tab['name']]['fields'][$fieldname] = [
+                                            'endpoints' => [
+                                                'field' => 'rasteiner/settingsarea/field/' . $field['name'],
+                                            ],
+                                        ] + $form->field($fieldname)->toArray();
+                                    }
+                                }
+                            }
+                        }
+                        
                         return [
                             'component' => 'k-form-drawer',
                             'props' => [
                                 'title' => 'Settings',
                                 'icon' => 'settings',
-                                'fields' => $fields,
+                                'tabs' => $tabs,
                                 'value' => $form->values(),
                             ]
                         ];
